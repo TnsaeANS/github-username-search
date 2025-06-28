@@ -39,7 +39,7 @@ export default function Home() {
   return (
     <div className="min-h-screen flex flex-col items-center justify-center px-4 py-20 font-sans text-white">
       <div className="w-full max-w-xl mx-auto space-y-12">
-      <h1 className="text-center text-5xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-purple-400 via-fuchsia-400 to-pink-400 tracking-tight select-none break-words">
+      <h1 className="text-center text-5xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-purple-400 via-grey-400 to-white tracking-tight select-none break-words">
         GitHub User Finder
       </h1>
 
