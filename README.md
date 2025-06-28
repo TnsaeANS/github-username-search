@@ -1,18 +1,23 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+This is a responsive web app built with Next.js 13+ (App Router) that allows users to search for GitHub profiles and view detailed user and repository information. The app uses the GitHub REST API and features client-side data fetching, dynamic routing, Tailwind CSS styling, and form validation.
 
-## Getting Started
 
-First, run the development server:
+  Next.js App Router with app/ directory
+  Client-side data fetching using Axios
+  Dynamic routing (/user/[username]) to show user-specific profile pages
+  Tailwind CSS for styling and responsiveness
+  Animated UI using gradients, blur effects, and transitions
+  Basic form handling with inline validation and loading states
 
-```bash
+
+
+    Getting Started
+
+git clone https://github.com/your-username/github-user-finder.git
+cd github-user-finder
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+
+
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
