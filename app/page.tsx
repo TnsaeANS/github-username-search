@@ -20,22 +20,34 @@ export default function Home() {
   const [loading, setLoading] = useState(false);
   const [navigating, setNavigating] = useState(false);
 
-  const handleSearch = async (e: React.FormEvent<HTMLFormElement>) => {
+  async function handleSearch(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    if (!username.trim()) return setError('Please enter a username');
-
+    if (!username.trim()) return setError("Please enter a username");
     setLoading(true);
     try {
-      const { data } = await axios.get(`https://api.github.com/users/${username}`);
+      const { data } = await axios.get(
+        `https://api.github.com/users/${username}`,
+        {
+          headers: {
+            Accept: "application/vnd.github+json",
+            "X-GitHub-Api-Version": "2022-11-28",
+          },
+        }
+      );
       setUser(data);
-      setError('');
-    } catch {
+      setError("");
+    } catch (err) {
+      console.error(err);
+      if (axios.isAxiosError(err) && err.response?.status === 403) {
+        setError("GitHub API returned 403. Please try again later.");
+      } else {
+        setError("User not found");
+      }
       setUser(null);
-      setError('User not found');
     } finally {
       setLoading(false);
     }
-  };
+  }
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center px-4 py-20 font-sans text-white">
