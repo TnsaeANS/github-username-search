@@ -2,21 +2,27 @@
 
 import { useState } from 'react';
 import axios from 'axios';
+import Link from 'next/link';
+
+type GithubUser = {
+  login: string;
+  name?: string;
+  avatar_url: string;
+  bio?: string;
+  public_repos: number;
+};
 
 export default function Home() {
   const [username, setUsername] = useState('');
-  const [user, setUser] = useState<null | {
-    login: string;
-    name?: string;
-    avatar_url: string;
-    bio?: string;
-  }>(null);
+  const [user, setUser] = useState<GithubUser | null>(null);
   const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
 
   const handleSearch = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!username.trim()) return setError('Please enter a username');
 
+    setLoading(true);
     try {
       const { data } = await axios.get(`https://api.github.com/users/${username}`);
       setUser(data);
@@ -24,6 +30,8 @@ export default function Home() {
     } catch {
       setUser(null);
       setError('User not found');
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -33,20 +41,22 @@ export default function Home() {
 
       <form 
         onSubmit={handleSearch}
-        className="w-full max-w-md flex flex-col sm:flex-row items-center gap-3"
+        className="w-full max-w-md text-gray-500 flex flex-col sm:flex-row items-center gap-3"
       >
         <input
           type="text"
           value={username}
           onChange={(e) => setUsername(e.target.value)}
-          placeholder="Enter GitHub username"
-          className="flex-1 px-4 py-2 border border-blue-300 rounded-full shadow-sm focus:ring-2 focus:ring-blue-300 focus:outline-none transition"
+          placeholder="Search GitHub username"
+          className="flex-1 px-4 py-2 placeholder:text-gray-500 border border-blue-300 rounded-full shadow-sm focus:ring-2 focus:ring-blue-300 focus:outline-none transition"
+          disabled={loading}
         />
         <button
           type="submit"
-          className="bg-blue-500 text-white px-6 py-2 rounded-full hover:bg-blue-600 transition font-medium shadow"
+          className="bg-blue-500 text-white px-6 py-2 rounded-full hover:bg-blue-600 transition font-medium shadow disabled:opacity-70"
+          disabled={loading}
         >
-          Search
+          {loading ? 'Searching...' : 'Search'}
         </button>
       </form>
 
@@ -63,13 +73,13 @@ export default function Home() {
             <div>
               <h2 className="text-xl font-semibold text-blue-700">{user.name || user.login}</h2>
               <p className="text-gray-600">{user.bio || 'No bio available'}</p>
-              <a
-                href={`https://github.com/${user.login}`}
-                target="_blank"
+              <p className="text-gray-500 text-sm mt-1">{user.public_repos} public repositories</p>
+              <Link
+                href={`/user/${user.login}`}
                 className="text-blue-500 hover:underline mt-2 inline-block"
               >
-                View Profile →
-              </a>
+                View Full Profile →
+              </Link>
             </div>
           </div>
         </div>
