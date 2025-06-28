@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import axios from 'axios';
 import Link from 'next/link';
+import { MagnifyingGlassIcon } from '@heroicons/react/24/outline';
 
 type GithubUser = {
   login: string;
@@ -36,54 +37,54 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-blue-100 via-white to-blue-50 px-6 py-10 font-sans">
-      <h1 className="text-3xl sm:text-4xl font-bold text-blue-600 mb-8 text-center">💙 GitHub User Finder</h1>
+    <div className="min-h-screen flex flex-col items-center justify-center px-4 py-20 font-sans text-white">
+      <div className="w-full max-w-xl mx-auto space-y-12">
+      <h1 className="text-center text-5xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-purple-400 via-fuchsia-400 to-pink-400 tracking-tight select-none break-words">
+        GitHub User Finder
+      </h1>
 
-      <form 
-        onSubmit={handleSearch}
-        className="w-full max-w-md text-gray-500 flex flex-col sm:flex-row items-center gap-3"
-      >
-        <input
-          type="text"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-          placeholder="Search GitHub username"
-          className="flex-1 px-4 py-2 placeholder:text-gray-500 border border-blue-300 rounded-full shadow-sm focus:ring-2 focus:ring-blue-300 focus:outline-none transition"
-          disabled={loading}
-        />
-        <button
-          type="submit"
-          className="bg-blue-500 text-white px-6 py-2 rounded-full hover:bg-blue-600 transition font-medium shadow disabled:opacity-70"
-          disabled={loading}
-        >
-          {loading ? 'Searching...' : 'Search'}
-        </button>
-      </form>
+        <form onSubmit={handleSearch} className="relative shadow-xl">
+          <input
+            autoFocus
+            type="text"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+            placeholder="Search a GitHub Username"
+            required
+            className="w-full py-4 pl-6 pr-16 text-white rounded-full bg-white/10 backdrop-blur-sm placeholder:text-gray-300 focus:outline-none focus:ring-2 focus:ring-fuchsia-400"
+          />
+          <button
+            type="submit"
+            disabled={loading}
+            className="absolute right-2 top-1/2 -translate-y-1/2 h-12 w-12 rounded-full bg-gradient-to-br from-fuchsia-500 to-purple-600 grid place-items-center shadow-lg hover:scale-105 transition-transform disabled:opacity-60"
+          >
+            {loading ? (
+              <svg className="animate-spin h-5 w-5 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <circle cx="12" cy="12" r="10" strokeOpacity="0.25" />
+                <path d="M22 12a10 10 0 01-10 10" />
+              </svg>
+            ) : (
+              <MagnifyingGlassIcon className="h-6 w-6 text-white" />
+            )}
+          </button>
+        </form>
 
-      {error && <p className="text-red-500 mt-4">{error}</p>}
+        {error && <p className="text-center text-red-400 font-medium">{error}</p>}
 
-      {user && (
-        <div className="mt-8 w-full max-w-md bg-white rounded-2xl shadow-lg p-6 border border-blue-100">
-          <div className="flex items-center gap-5">
-            <img
-              src={user.avatar_url}
-              alt={user.login}
-              className="w-20 h-20 rounded-full border-4 border-blue-200"
-            />
-            <div>
-              <h2 className="text-xl font-semibold text-blue-700">{user.name || user.login}</h2>
-              <p className="text-gray-600">{user.bio || 'No bio available'}</p>
-              <p className="text-gray-500 text-sm mt-1">{user.public_repos} public repositories</p>
-              <Link
-                href={`/user/${user.login}`}
-                className="text-blue-500 hover:underline mt-2 inline-block"
-              >
+        {user && (
+          <div className="bg-white/5 backdrop-blur-md rounded-3xl p-8 shadow-xl border border-white/10 flex gap-6 animate-fade-in">
+            <img src={user.avatar_url} alt={user.login} className="w-24 h-24 rounded-full border-4 border-fuchsia-400" />
+            <div className="space-y-2">
+              <h2 className="text-2xl font-semibold text-fuchsia-300">{user.name || user.login}</h2>
+              <p className="text-gray-300 max-w-prose">{user.bio || "No bio available"}</p>
+              <p className="text-gray-400 text-sm">{user.public_repos} public repositories</p>
+              <Link href={`/user/${user.login}`} className="inline-block text-fuchsia-300 hover:underline">
                 View Full Profile →
               </Link>
             </div>
           </div>
-        </div>
-      )}
+        )}
+      </div>
     </div>
   );
 }
