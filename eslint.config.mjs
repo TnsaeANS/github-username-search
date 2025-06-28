@@ -15,5 +15,5 @@ export default [
     },
   }),
   // any Next.js presets already added by create-next-app
-  ...tseslint.configs.recommended,
+  ...tseslint.configs.recommended[0],
 ];
