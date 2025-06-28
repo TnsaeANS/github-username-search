@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import axios from 'axios';
 import Link from 'next/link';
-import { MagnifyingGlassIcon } from '@heroicons/react/24/outline';
+import { MagnifyingGlassIcon, ArrowRightIcon } from '@heroicons/react/24/outline';
 
 type GithubUser = {
   login: string;
@@ -18,6 +18,7 @@ export default function Home() {
   const [user, setUser] = useState<GithubUser | null>(null);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+  const [navigating, setNavigating] = useState(false);
 
   const handleSearch = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -39,9 +40,9 @@ export default function Home() {
   return (
     <div className="min-h-screen flex flex-col items-center justify-center px-4 py-20 font-sans text-white">
       <div className="w-full max-w-xl mx-auto space-y-12">
-      <h1 className="text-center text-5xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-purple-400 via-grey-400 to-white tracking-tight select-none break-words">
-        GitHub User Finder
-      </h1>
+        <h1 className="text-center text-5xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-purple-400 via-gray-400 to-white tracking-tight select-none break-words">
+          GitHub User Finder
+        </h1>
 
         <form onSubmit={handleSearch} className="relative shadow-xl">
           <input
@@ -78,8 +79,25 @@ export default function Home() {
               <h2 className="text-2xl font-semibold text-fuchsia-300">{user.name || user.login}</h2>
               <p className="text-gray-300 max-w-prose">{user.bio || "No bio available"}</p>
               <p className="text-gray-400 text-sm">{user.public_repos} public repositories</p>
-              <Link href={`/user/${user.login}`} className="inline-block text-fuchsia-300 hover:underline">
-                View Full Profile →
+              <Link 
+                href={`/user/${user.login}`} 
+                className="inline-flex items-center text-fuchsia-300 hover:text-white transition-colors"
+                onClick={() => setNavigating(true)}
+              >
+                {navigating ? (
+                  <>
+                    <svg className="animate-spin h-5 w-5 mr-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                      <circle cx="12" cy="12" r="10" strokeOpacity="0.25" />
+                      <path d="M22 12a10 10 0 01-10 10" />
+                    </svg>
+                    Loading Profile...
+                  </>
+                ) : (
+                  <>
+                    View Full Profile
+                    <ArrowRightIcon className="h-4 w-4 ml-1" />
+                  </>
+                )}
               </Link>
             </div>
           </div>
