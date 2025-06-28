@@ -234,7 +234,9 @@ export default async function UserProfile({
       <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-[#1B0535] via-[#2D0A4A] to-[#120218]">
         <div className="max-w-md w-full bg-white/5 backdrop-blur-md p-8 rounded-3xl shadow-xl border border-white/10 text-center">
           <h2 className="text-2xl font-bold text-fuchsia-300 mb-4">User Not Found</h2>
-          <p className="text-gray-600 mb-6">{`The GitHub user "${params.username}" doesn't exist or can't be accessed.`}</p>
+<p className="text-gray-600 mb-6">
+  {`The GitHub user "${params.username}" does not exist or cannot be accessed.`}
+</p>
           <Link
             href="/"
             className="inline-flex items-center px-6 py-3 rounded-full bg-gradient-to-br from-fuchsia-500 to-purple-600 text-white font-medium hover:shadow-lg transition-all"
