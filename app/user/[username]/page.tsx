@@ -30,11 +30,13 @@ type GithubRepo = {
   language: string | null;
 };
 
-export default async function UserProfile({
-  params,
-}: {
-  params: { username: string };
-}) {
+interface PageProps {
+  params: {
+    username: string;
+  };
+}
+
+export default async function UserProfile({ params }: PageProps) {
   try {
     // Fetch user data
     const userResponse = await axios.get(`https://api.github.com/users/${params.username}`, {
