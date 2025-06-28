@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import axios from 'axios';
 import Link from 'next/link';
+import Image from 'next/image';
 import { MagnifyingGlassIcon, ArrowRightIcon } from '@heroicons/react/24/outline';
 
 type GithubUser = {
@@ -86,8 +87,14 @@ export default function Home() {
 
         {user && (
           <div className="bg-white/5 backdrop-blur-md rounded-3xl p-8 shadow-xl border border-white/10 flex gap-6 animate-fade-in">
-            <img src={user.avatar_url} alt={user.login} className="w-24 h-24 rounded-full border-4 border-fuchsia-400" />
-            <div className="space-y-2">
+<Image
+              src={user.avatar_url}
+              alt={user.login}
+              width={96}
+              height={96}
+              className="w-24 h-24 rounded-full border-4 border-fuchsia-400"
+              unoptimized
+            />            <div className="space-y-2">
               <h2 className="text-2xl font-semibold text-fuchsia-300">{user.name || user.login}</h2>
               <p className="text-gray-300 max-w-prose">{user.bio || "No bio available"}</p>
               <p className="text-gray-400 text-sm">{user.public_repos} public repositories</p>

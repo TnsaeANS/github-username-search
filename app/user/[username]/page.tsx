@@ -1,5 +1,6 @@
 import axios from 'axios';
 import Link from 'next/link';
+import Image from 'next/image';
 import { ArrowLeftIcon } from '@heroicons/react/24/outline';
 
 type GithubUser = {
@@ -76,11 +77,15 @@ export default async function UserProfile({
           <div className="bg-white/5 backdrop-blur-md rounded-3xl p-8 shadow-xl border border-white/10 mb-8">
             <div className="flex flex-col md:flex-row gap-8">
               <div className="flex-shrink-0">
-                <img 
-                  src={user.avatar_url} 
-                  alt={user.login} 
-                  className="w-48 h-48 rounded-full border-4 border-fuchsia-400 object-cover"
-                />
+                <Image
+                              src={user.avatar_url}
+                              alt={user.login}
+                              width={96}
+                              height={96}
+                              className="w-24 h-24 rounded-full border-4 border-fuchsia-400"
+                              unoptimized
+                              priority
+                            /> 
               </div>
               <div className="flex-1">
                 <h1 className="text-3xl font-bold text-fuchsia-300">
