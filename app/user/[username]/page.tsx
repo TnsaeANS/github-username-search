@@ -229,7 +229,7 @@ export default async function UserProfile({
         </div>
       </div>
     );
-  } catch (error) {
+  } catch (_error) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-[#1B0535] via-[#2D0A4A] to-[#120218]">
         <div className="max-w-md w-full bg-white/5 backdrop-blur-md p-8 rounded-3xl shadow-xl border border-white/10 text-center">
