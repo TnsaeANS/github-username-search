@@ -74,7 +74,7 @@ export default async function UserProfile({ params }: PageProps) {
     );
 
     return (
-      <div className="min-h-screen text-white">
+      <div className="min-h-screen bg-black-400 text-white">
         <div className="max-w-6xl mx-auto px-4 py-8">
           <Link
             href="/"
